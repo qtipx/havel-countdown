@@ -222,87 +222,225 @@
     const progressFill = document.getElementById("progress-fill");
     const dailyPhraseEl = document.getElementById("daily-phrase");
 
-    const phrasesLong = [
-      "Noch <strong>{DAYS} Tage</strong> bis zur Havel – genug Zeit, um die Sonnenbrille dreimal zu verlieren. 😎",
-      "<strong>{DAYS} Tage</strong> bis zum Ablegen – die Havel putzt sich schon raus, nur ihr noch nicht. 🧽",
-      "In <strong>{DAYS} Tagen</strong> werden E-Mails durch Bugwellen ersetzt. Klingt nach einem fairen Deal. 💻➡️🚤",
-      "Noch <strong>{DAYS} Tage</strong> Vorspiel, dann gibt’s Havel-Hauptprogramm. 📽️",
-      "<strong>{DAYS} Tage</strong> bis zum Bordleben – Zeit, schon mal Ausreden fürs Handy-Aus zu üben. 📵"
+    // 200 einzigartige Sprüche: Index 0 = 1 Tag übrig, Index 199 = 200 Tage übrig
+    const dailyPhrases = [
+      "Nur noch <strong>{DAYS} Tag</strong> – ab morgen wird die Havel euer Büro. ⛵",
+      "Noch <strong>{DAYS} Tage</strong> – letzte E-Mails, dann Funkstille und Dieselduft. 📧➡️🚤",
+      "In <strong>{DAYS} Tagen</strong> ersetzt der Bordkaffee die Büroküche. ☕",
+      "<strong>{DAYS} Tage</strong> – Zeit, die Sonnenbrille zu suchen und das Handy zu vergessen. 😎",
+      "Noch <strong>{DAYS} Tage</strong> bis zur Havel – der Alltag kann schon mal sein Handtuch werfen. 🏳️",
+      "<strong>{DAYS} Tage</strong> – die Vorfreude hat schon mehr Wellen als die Havel. 🌊",
+      "Noch <strong>{DAYS} Tage</strong> – das Notebook merkt langsam, dass Urlaub droht. 💻",
+      "In <strong>{DAYS} Tagen</strong> ist der wichtigste Termin: Leinen los. 📅⚓",
+      "Nur noch <strong>{DAYS} Tage</strong> – höchste Zeit, den Bürostuhl emotional zu verabschieden. 💼",
+      "<strong>{DAYS} Tage</strong> – die Havel macht sich schon hübsch für euch. 🌅",
+      "Noch <strong>{DAYS} Tage</strong> – bald wird der Wecker durch Möwen ersetzt. ⏰🕊️",
+      "In <strong>{DAYS} Tagen</strong> sind Staus nur noch was für andere Leute. 🚗❌",
+      "<strong>{DAYS} Tage</strong> – die Kaffeepause wird bald zur Schleusenpause. ☕⚙️",
+      "Noch <strong>{DAYS} Tage</strong> bis zur Havel – und der Kopf ist längst unterwegs. 🧠🚤",
+      "In <strong>{DAYS} Tagen</strong> habt ihr mehr Wasser als Termine. 💧",
+      "<strong>{DAYS} Tage</strong> – die innere Bordküche plant bereits die erste Pfanne Rührei. 🍳",
+      "Noch <strong>{DAYS} Tage</strong> – Zeit, die Playlist von „Meeting“ auf „Motoryacht“ zu stellen. 🎶",
+      "In <strong>{DAYS} Tagen</strong> wird der wichtigste Knopf: Start statt Senden. ▶️",
+      "<strong>{DAYS} Tage</strong> – eure To-do-Liste schrumpft, die Vorfreude wächst. ✅",
+      "Noch <strong>{DAYS} Tage</strong> – perfekt, um heimlich schon die Wetter-Apps zu stalken. 🌦️",
+      "In <strong>{DAYS} Tagen</strong> heißt es statt „Moin Büro“ nur noch „Moin Havel“. 👋",
+      "Noch <strong>{DAYS} Tage</strong> – Zeit, die letzten Ausreden gegen Urlaub zu begraben. ⚰️",
+      "<strong>{DAYS} Tage</strong> – das Boot steht schon gedanklich im Leerlauf. ⚓",
+      "Noch <strong>{DAYS} Tage</strong> – dann gibt’s statt Tastatur wieder Tampen in der Hand. 🧵",
+      "In <strong>{DAYS} Tagen</strong> ist die wichtigste Frage: „Backbord oder Steuerbord?“ ⬅️➡️",
+      "<strong>{DAYS} Tage</strong> – euer Kalender sieht schon aus wie ein See: viel blau. 🟦",
+      "Noch <strong>{DAYS} Tage</strong> – höchste Zeit, die Bordkappe zu entstauben. 🧢",
+      "In <strong>{DAYS} Tagen</strong> ist „Feierabend“ einfach ein anderes Wort für „Anker werfen“. ⚓",
+      "<strong>{DAYS} Tage</strong> – das Büro schwitzt, ihr bald entspannt auf dem Deck. 😄",
+      "Noch <strong>{DAYS} Tage</strong> – die Havel zählt mit, versprochen. 🧮",
+      "In <strong>{DAYS} Tagen</strong> wird der Blick aus dem Fenster endlich wieder spannend. 🌤️",
+      "<strong>{DAYS} Tage</strong> – Zeit, die letzten Zweifel über Bord zu werfen. 🛶",
+      "Noch <strong>{DAYS} Tage</strong> – dann gibt’s Frühstück mit Wellen statt Mails. 📧❌",
+      "In <strong>{DAYS} Tagen</strong> legt ihr das Handy in den Flugmodus und die Seele gleich mit. ✈️💤",
+      "<strong>{DAYS} Tage</strong> – die To-do-Liste schrumpft, die Bierliste wächst. 🍺",
+      "Noch <strong>{DAYS} Tage</strong> – perfekt, um schon mal von Schleusenmanövern zu träumen. 🌙",
+      "In <strong>{DAYS} Tagen</strong> wird der Bordalltag zur besten Art von Routine. 🔁",
+      "<strong>{DAYS} Tage</strong> – ihr seid offiziell in der Vorfreude-Phase. 🥳",
+      "Noch <strong>{DAYS} Tage</strong> – die Havel liegt schon in Lauerstellung. 👀",
+      "In <strong>{DAYS} Tagen</strong> sind Aktenordner nur noch Deko im Kopf. 📂",
+      "<strong>{DAYS} Tage</strong> – Zeit, den inneren Landratte-Modus auszuschalten. 🐀❌",
+      "Noch <strong>{DAYS} Tage</strong> – langsam wird’s ernst mit dem „Leinen los“-Mantra. 🧘",
+      "In <strong>{DAYS} Tagen</strong> wechselt ihr von „Outlook“ auf „Ausblick“. 🌅",
+      "<strong>{DAYS} Tage</strong> – euer Kaffee schmeckt schon nach Bordküche. ☕",
+      "Noch <strong>{DAYS} Tage</strong> – bester Moment, um sich ans Nichtstun zu gewöhnen. 😌",
+      "In <strong>{DAYS} Tagen</strong> werden aus Deadlines nur noch Wasserlinien. 🌊",
+      "<strong>{DAYS} Tage</strong> – das Boot steht quasi schon mit laufendem Motor im Kopf. 🔊",
+      "Noch <strong>{DAYS} Tage</strong> – und der Geräuschpegel heißt wieder: Wasser + Motor + Lachen. 😂",
+      "In <strong>{DAYS} Tagen</strong> wird Steg statt Schreibtischkante eure Grenze. 🪵",
+      "<strong>{DAYS} Tage</strong> – die Havel macht schon leise „pssst, ich warte“. 🤫",
+      "Noch <strong>{DAYS} Tage</strong> – Versicherung, Papiere, Bier: alles auf dem Radar? 📝",
+      "In <strong>{DAYS} Tagen</strong> ist WLAN offiziell Nebensache. 📶❌",
+      "<strong>{DAYS} Tage</strong> – das ist weniger als du denkst und mehr als dein Chef mag. 😉",
+      "Noch <strong>{DAYS} Tage</strong> – Motivation steigt, Produktivität sinkt. Alles im Lot. ⚖️",
+      "In <strong>{DAYS} Tagen</strong> ist der wichtigste Klick: Zündung statt Zoom. 💻➡️🚤",
+      "<strong>{DAYS} Tage</strong> – der Kalender ist nur noch Deko bis zur Havel. 🗓️",
+      "Noch <strong>{DAYS} Tage</strong> – bald tauscht ihr Sitzfleisch gegen Stehplatz auf dem Vorschiff. 🪑➡️🛥️",
+      "In <strong>{DAYS} Tagen</strong> sind Meetings nur noch „Wer holt Bier?“. 🍻",
+      "<strong>{DAYS} Tage</strong> – Zeit, den Kopf auf Urlaubs-Frequenz zu drehen. 📻",
+      "Noch <strong>{DAYS} Tage</strong> – man darf langsam anfangen, innerlich zu packen. 🧳",
+      "In <strong>{DAYS} Tagen</strong> heißt Multitasking: Sonne genießen und Boot gerade halten. ☀️",
+      "<strong>{DAYS} Tage</strong> – die Havel wartet geduldig, du eher weniger. 😄",
+      "Noch <strong>{DAYS} Tage</strong> – perfekte Zeit, um das Wort „Stress“ zu verabschieden. 🚮",
+      "In <strong>{DAYS} Tagen</strong> sind Excel-Tabellen nur noch legendäre Erinnerungen. 📊",
+      "<strong>{DAYS} Tage</strong> – das Boot steht schon in deiner Gedanken-Garage. 🚤",
+      "Noch <strong>{DAYS} Tage</strong> – die Schleusenwärter ahnen noch nichts von euch. 😏",
+      "In <strong>{DAYS} Tagen</strong> ist jedes „Ping“ vom Handy einer zu viel. 🔕",
+      "<strong>{DAYS} Tage</strong> – beste Phase: nah genug, um sich zu freuen, weit genug für Gelassenheit. 😌",
+      "Noch <strong>{DAYS} Tage</strong> – du könntest jetzt schon gedanklich ablegen. 🧠⚓",
+      "In <strong>{DAYS} Tagen</strong> ist „mal eben raus“ plötzlich eine ganze Woche Wasser. 🌊",
+      "<strong>{DAYS} Tage</strong> – die Vorfreude macht schon Wellen im Kalender. 📅",
+      "Noch <strong>{DAYS} Tage</strong> – lass den Alltag schon mal langsam ausrollen. 🛑",
+      "In <strong>{DAYS} Tagen</strong> ist dein größtes Problem: „Was grillen wir heute?“. 🍖",
+      "<strong>{DAYS} Tage</strong> – du bist offiziell im Warmfahrmodus. 🔧",
+      "Noch <strong>{DAYS} Tage</strong> – das Boot kann sich schon mal innerlich warm laufen. 🛥️",
+      "In <strong>{DAYS} Tagen</strong> hat die Autokorrektur „Havel“ endlich gelernt. 📱",
+      "<strong>{DAYS} Tage</strong> – Zeit, von Meetings zu Marinas umzuschalten. ⚓",
+      "Noch <strong>{DAYS} Tage</strong> – das Navi kennt den Weg, dein Kopf sowieso. 🧭",
+      "In <strong>{DAYS} Tagen</strong> wird deine größte Entscheidung: Früh aufstehen oder noch mal umdrehen? 😴",
+      "<strong>{DAYS} Tage</strong> – der Laptop spürt, dass er bald Pause hat. 💻💤",
+      "Noch <strong>{DAYS} Tage</strong> – vielleicht jetzt schon den „Abwesenheitsassistenten“ vorbereiten. 📨",
+      "In <strong>{DAYS} Tagen</strong> ist dein Dresscode: T-Shirt, Shorts, Grinsen. 😎",
+      "<strong>{DAYS} Tage</strong> – der Alltagsanker wird bald gelichtet. ⚓",
+      "Noch <strong>{DAYS} Tage</strong> – bald zählst du eher Schleusen als Stunden. ⏳",
+      "In <strong>{DAYS} Tagen</strong> ist GPS wichtiger als WLAN-Passwort. 📡",
+      "<strong>{DAYS} Tage</strong> – Zeit, dem inneren Landratten-Anteil Tschüss zu sagen. 🐀",
+      "Noch <strong>{DAYS} Tage</strong> – die Havel-Diät: weniger Stress, mehr Wasser. 💧",
+      "In <strong>{DAYS} Tagen</strong> gilt: Sonnenbrille statt Bildschirmbrille. 🕶️",
+      "<strong>{DAYS} Tage</strong> – du arbeitest eigentlich schon im Kopf mit Blick aufs Wasser. 🌊",
+      "Noch <strong>{DAYS} Tage</strong> – perfekt, um die Crew mental zusammenzutrommeln. 👥",
+      "In <strong>{DAYS} Tagen</strong> ist das Bordradio lauter als jede Teams-Benachrichtigung. 📢",
+      "<strong>{DAYS} Tage</strong> – dein innerer Kapitän poliert schon symbolisch das Steuerrad. 🛞",
+      "Noch <strong>{DAYS} Tage</strong> – das ist mehr als nichts und weniger als genug. 😉",
+      "In <strong>{DAYS} Tagen</strong> wirst du die Havel eher fühlen als sehen. ✨",
+      "<strong>{DAYS} Tage</strong> – die Vorfreude macht schon kleine Bugwellen im Alltag. 🚤",
+      "Noch <strong>{DAYS} Tage</strong> – vielleicht heute schonmal ein Probe-Bier auf die Tour. 🍺",
+      "In <strong>{DAYS} Tagen</strong> ist dein größter Tab: das Wetter, nicht die Mails. 🌦️",
+      "<strong>{DAYS} Tage</strong> – gut, um nochmal zu checken: Sonnencreme, Cap, gute Laune. ✅",
+      "Noch <strong>{DAYS} Tage</strong> – die innere Uhr tickt längst Richtung Havel. 🕒",
+      "In <strong>{DAYS} Tagen</strong> zählt jeder Sonnenuntergang doppelt. 🌇",
+      "<strong>{DAYS} Tage</strong> – du bist offiziell im „Bald-geht’s-los“-Modus. 🚦",
+      "Noch <strong>{DAYS} Tage</strong> – man könnte fast schon anfangen, Klamotten zu stapeln. 👕",
+      "In <strong>{DAYS} Tagen</strong> sind Memos egal, nur noch Motorengeräusch zählt. 🎶",
+      "<strong>{DAYS} Tage</strong> – dein Kopf ist schon halbe Strecke Zehdenick. 🧠",
+      "Noch <strong>{DAYS} Tage</strong> – langsam rückt die Havel in Rufweite. 📣",
+      "In <strong>{DAYS} Tagen</strong> wird die Bordküche zur Hauptkantine. 🍽️",
+      "<strong>{DAYS} Tage</strong> – die Welt dreht sich weiter, du drehst nur noch Runden auf dem Wasser. 🌍",
+      "Noch <strong>{DAYS} Tage</strong> – der Gedanke an Urlaub schmeckt schon salzig. 🧂",
+      "In <strong>{DAYS} Tagen</strong> ist jeder Blick nach vorn: Wasser, nicht Bildschirm. 💧",
+      "<strong>{DAYS} Tage</strong> – die Havel schickt schon testweise ein paar Wellen-Grüße. 👋",
+      "Noch <strong>{DAYS} Tage</strong> – du kannst innerlich schon mal „Moin“ zum Boot sagen. ⛵",
+      "In <strong>{DAYS} Tagen</strong> ist dein größter Task: Nicht reinfallen. 😄",
+      "<strong>{DAYS} Tage</strong> – die Entspannung fährt schon im Leerlauf. 🧘",
+      "Noch <strong>{DAYS} Tage</strong> – dein Schreibtisch ahnt Böses. 🪑",
+      "In <strong>{DAYS} Tagen</strong> ist der schönste Knopf: Motor an. 🔑",
+      "<strong>{DAYS} Tage</strong> – du bist schon näher am Boot als an deiner letzten Deadline. 📆",
+      "Noch <strong>{DAYS} Tage</strong> – man könnte jetzt schon die Route auf der Karte nachfahren. 🗺️",
+      "In <strong>{DAYS} Tagen</strong> zieht die Havel euch magisch an. 🧲",
+      "<strong>{DAYS} Tage</strong> – der Feierabend riecht schon nach Wasser und Grill. 🔥",
+      "Noch <strong>{DAYS} Tage</strong> – bald ist die lauteste Frage: „Wer macht den nächsten Kaffee?“. ☕",
+      "In <strong>{DAYS} Tagen</strong> werden die einzigen Mails: Möwen-Nachrichten. 🕊️",
+      "<strong>{DAYS} Tage</strong> – das Boot ist noch irgendwo, aber schon voll in deinem Kopf. 🚤",
+      "Noch <strong>{DAYS} Tage</strong> – letzter Feinschliff im Alltag, bevor der Urlaub übernimmt. 🧹",
+      "In <strong>{DAYS} Tagen</strong> habt ihr mehr Geschichten als Mails im Posteingang. ✉️",
+      "<strong>{DAYS} Tage</strong> – die Havel läuft nicht weg, aber ihr lauft auf sie zu. 🚶",
+      "Noch <strong>{DAYS} Tage</strong> – dem Kopf ist das Wetter schon egal, Hauptsache Boot. 🌤️",
+      "In <strong>{DAYS} Tagen</strong> löst die Bordtoilette jedes Großstadtklo ab. 🚻",
+      "<strong>{DAYS} Tage</strong> – du zählst jetzt eher runter als hoch. 🔢",
+      "Noch <strong>{DAYS} Tage</strong> – Zeit, den inneren Kontrollfreak an die Reling zu stellen. 😄",
+      "In <strong>{DAYS} Tagen</strong> ist Havel statt Hektik angesagt. 🧭",
+      "<strong>{DAYS} Tage</strong> – ihr seid näher an der Tour als an Weihnachten. 🎄❌",
+      "Noch <strong>{DAYS} Tage</strong> – wenn das kein Grund zur Vorfreude ist. 🎉",
+      "In <strong>{DAYS} Tagen</strong> feiert ihr jeden Sonnenfleck an Deck. ☀️",
+      "<strong>{DAYS} Tage</strong> – du hast offiziell Urlaub im Blickfeld. 👀",
+      "Noch <strong>{DAYS} Tage</strong> – jeder Tag bringt euch eine Welle näher. 🌊",
+      "In <strong>{DAYS} Tagen</strong> seid ihr die Kings der Havel – zumindest gefühlt. 👑",
+      "<strong>{DAYS} Tage</strong> – der Alltag hat seine letzte Verwarnung. 🚨",
+      "Noch <strong>{DAYS} Tage</strong> – und der Chef kann euch mal von Land aus winken. 👋",
+      "In <strong>{DAYS} Tagen</strong> ist Bordzeit die einzig gültige Zeitzone. 🕰️",
+      "<strong>{DAYS} Tage</strong> – Übungsaufgabe: heute schon mal tief durchatmen. 🌬️",
+      "Noch <strong>{DAYS} Tage</strong> – bald ist jeder Tag einfach „Tour-Tag“. 📅",
+      "In <strong>{DAYS} Tagen</strong> sind die einzigen Staus: an der Schleuse. 🚤🚤",
+      "<strong>{DAYS} Tage</strong> – die Havel wartet, ihr zappelt. Gute Kombi. 😄",
+      "Noch <strong>{DAYS} Tage</strong> – du trainierst jetzt offiziell im Sitzen entspannen. 🪑",
+      "In <strong>{DAYS} Tagen</strong> sind PowerPoint-Folien nur noch ein böser Traum. 📉",
+      "<strong>{DAYS} Tage</strong> – die Sonne probt schon mal für euren Start. ☀️",
+      "Noch <strong>{DAYS} Tage</strong> – jede Stunde bringt euch näher zum „Leinen los“. ⏱️",
+      "In <strong>{DAYS} Tagen</strong> ist der einzige Ton, der nervt: der Wecker fürs Ablegen. ⏰",
+      "<strong>{DAYS} Tage</strong> – du kannst die Wellen innerlich schon hören. 🌊",
+      "Noch <strong>{DAYS} Tage</strong> – höchste Zeit, gedanklich auszumisten. 🧠",
+      "In <strong>{DAYS} Tagen</strong> sind Mails „später“ und Havel „jetzt“. 📨❌",
+      "<strong>{DAYS} Tage</strong> – Kalender sagt „bald“, Kopf sagt „endlich“. 🙌",
+      "Noch <strong>{DAYS} Tage</strong> – das Boot kennt euch noch nicht, aber freut sich schon. 😄",
+      "In <strong>{DAYS} Tagen</strong> tauscht ihr Büro-Kaffee gegen Bordkaffee. ☕",
+      "<strong>{DAYS} Tage</strong> – nicht mehr lang, bis ihr den ersten Fender raushängt. 🎈",
+      "Noch <strong>{DAYS} Tage</strong> – die Alltagsgeräusche werden bald von Wasserklatschen verdrängt. 💧",
+      "In <strong>{DAYS} Tagen</strong> wird jede Uferböschung zur Timeline. 🌿",
+      "<strong>{DAYS} Tage</strong> – ihr seid schon fast auf Havel-Wellenlänge. 📻",
+      "Noch <strong>{DAYS} Tage</strong> – die beste Ausrede für alles: „Bin dann mal auf dem Boot.“",
+      "In <strong>{DAYS} Tagen</strong> ist eure größte Sorge: Wohin mit dem nächsten Anleger. ⚓",
+      "<strong>{DAYS} Tage</strong> – ihr habt mehr Pläne auf dem Wasser als an Land. 🌍",
+      "Noch <strong>{DAYS} Tage</strong> – und das Deck wird zur Lieblingsbank. 🛳️",
+      "In <strong>{DAYS} Tagen</strong> macht ihr dem Wort „Entschleunigung“ alle Ehre. 🐢",
+      "<strong>{DAYS} Tage</strong> – die Havel träumt vielleicht auch schon von euch. 😴",
+      "Noch <strong>{DAYS} Tage</strong> – innerlich habt ihr längst abgelegt. 🧠⚓",
+      "In <strong>{DAYS} Tagen</strong> ist Wasserkante statt Schreibtischkante. 💧",
+      "<strong>{DAYS} Tage</strong> – fast in Rufweite: „Leinen los!“ 📣",
+      "Noch <strong>{DAYS} Tage</strong> – man könnte langsam anfangen, wichtige Sachen nicht mehr neu anzufangen. 😄",
+      "In <strong>{DAYS} Tagen</strong> seid ihr offizielles Inventar auf der Havel. 📜",
+      "<strong>{DAYS} Tage</strong> – jede To-do-Liste endet inzwischen bei „Urlaub“. ✅",
+      "Noch <strong>{DAYS} Tage</strong> – der Gedanke ans Boot macht jetzt mehr mit dir als jeder Kaffee. ☕",
+      "In <strong>{DAYS} Tagen</strong> wird jeder Morgen ein bisschen nach Abenteuer riechen. 🌄",
+      "<strong>{DAYS} Tage</strong> – du kannst das Ablegemanöver schon im Kopf durchspielen. 🎬",
+      "Noch <strong>{DAYS} Tage</strong> – die echte Welt ist bald: Wasser, Boot, Crew. 🌍",
+      "In <strong>{DAYS} Tagen</strong> ist jeder Sonnenstrahl eine Einladung aufs Deck. ☀️",
+      "<strong>{DAYS} Tage</strong> – der Havel-Countdown ist im vollen Gange. 🔢",
+      "Noch <strong>{DAYS} Tage</strong> – dein Alltag läuft nur noch auf Standgas. 🐌",
+      "In <strong>{DAYS} Tagen</strong> werden deine Stories nach Diesel und Wasser klingen. 📖",
+      "<strong>{DAYS} Tage</strong> – wenn das kein Grund zum Grinsen ist. 😁",
+      "Noch <strong>{DAYS} Tage</strong> – der Bug zeigt schon mal grob nach Zehdenick. 🧭",
+      "In <strong>{DAYS} Tagen</strong> gibt’s nur noch Bootsmenschen und Uferpublikum. 👀",
+      "<strong>{DAYS} Tage</strong> – fast geschafft, bleib noch kurz an Land. 😉",
+      "Noch <strong>{DAYS} Tage</strong> – dann ist „Alltag“ wieder nur ein Wort im Duden. 📚",
+      "In <strong>{DAYS} Tagen</strong> wirst du wissen, warum sich das Warten gelohnt hat. ⭐",
+      "<strong>{DAYS} Tage</strong> – der Schleusentrainer läuft schon im Hintergrund. ⚙️",
+      "Noch <strong>{DAYS} Tage</strong> – letzte Meter zur Wohlfühl-Wasserlinie. 🌊",
+      "In <strong>{DAYS} Tagen</strong> trägst du die Sonnenbrille nicht mehr nur fürs Bürolicht. 😎",
+      "<strong>{DAYS} Tage</strong> – das Boot steht gedanklich schon klar zum Ablegen. ⚓",
+      "Noch <strong>{DAYS} Tage</strong> – bald zählt nur noch: Wetter, Wasser, Weg. 🌤️",
+      "In <strong>{DAYS} Tagen</strong> könnt ihr offiziell behaupten: „Wir sind dann mal weg.“ ✌️",
+      "<strong>{DAYS} Tage</strong> – jede Nacht bringt euch näher ans Bordleben. 🌙",
+      "Noch <strong>{DAYS} Tage</strong> – das ist schon Havel-Vorfreude im Endstadium. 🤩",
+      "In <strong>{DAYS} Tagen</strong> wird das Boot euer Lieblingsort. ❤️",
+      "<strong>{DAYS} Tage</strong> – du bist näher am Wasser als an jeder Ausrede. 😉",
+      "Noch <strong>{DAYS} Tage</strong> – durchhalten, der Motor wärmt sich schon. 🔧",
+      "In <strong>{DAYS} Tagen</strong> heißt dein bester Freund: Steuerstand. 🛥️",
+      "<strong>{DAYS} Tage</strong> – fast da. Die Havel wartet schon ungeduldig. ⏳",
+      "Noch <strong>{DAYS} Tage</strong> – bald ist alles andere nur noch Kulisse für eure Tour. 🎭"
     ];
 
-    const phrasesMid = [
-      "Nur noch <strong>{DAYS} Tage</strong> – der innere Kapitän hat schon die Mütze auf. ⛵",
-      "<strong>{DAYS} Tage</strong> bis Zehdenick – der Büro-Stuhl wird nervös. 💺",
-      "Noch <strong>{DAYS} Tage</strong> Landgang, dann wird wieder Wasser die Hauptrolle spielen. 💧",
-      "In <strong>{DAYS} Tagen</strong> tauscht ihr Stau gegen Schleuse. Gute Entscheidung. 🚗❌",
-      "<strong>{DAYS} Tage</strong> – langsam kann die Crew anfangen, Synchron-Seufzen im Büro zu trainieren. 😮‍💨"
-    ];
-
-    const phrasesShort = [
-      "Nur noch <strong>{DAYS} Tage</strong> – Packliste raus, Alltag aus. 🧳",
-      "<strong>{DAYS} Tage</strong> bis Havel-Freiheit – der Countdown riecht schon nach Diesel und Grill. 🔥",
-      "Noch <strong>{DAYS} Tage</strong> – jetzt bloß keinen Sonnencreme-Kauf vergessen. 🧴",
-      "In <strong>{DAYS} Tagen</strong> heißt es wieder: Vor dem Frühstück die Leinen klar machen. ⚓",
-      "<strong>{DAYS} Tage</strong> – die Vorfreude macht schon kleine Bugwellen im Kopf. 🌊"
-    ];
-
-    const phrasesLastWeek = [
-      "Nur noch <strong>{DAYS} Tage</strong> – ihr könnt den Havel-Pegel bald mit der Hand messen. ✋",
-      "<strong>{DAYS} Tage</strong> – wenn ihr jetzt nicht langsam ins Urlaubs-Feeling kommt, weiß ich auch nicht. 😄",
-      "Noch <strong>{DAYS} Tage</strong> – ab jetzt zählt man eigentlich in Stunden. ⏳",
-      "In <strong>{DAYS} Tagen</strong> wischt ihr die Bordküche und nicht mehr den Schreibtisch. 🧽",
-      "<strong>{DAYS} Tage</strong> – Zeit, den Kühlschrank ernsthaft mit Bier zu überladen. 🍺"
-    ];
-
-    const phrasesTripDay = [
-      "Heute ist es so weit – <strong>Leinen los!</strong> Die Havel wartet nicht. 🚤",
-      "Abreisetag! Laptop zu, Boot auf. Viel Spaß auf der Havel! ⚓",
-      "Heut ist Tourstart – denkt dran: Die wichtigste Leine ist die zum Bierkasten. 😉",
-      "Havel-Tag! Falls ihr noch im Bett liegt: falscher Ort. Ab zum Boot. ⛵"
-    ];
-
-    const phrasesAfter = [
-      "Die Tour ist durch – Zeit, die nächste Havel-Mission zu planen. 🔁",
-      "Schon vorbei? Dann wird’s Zeit für: Bilder sortieren, Geschichten ausschmücken, nächste Tour buchen. 📸",
-      "Nach der Tour ist vor der Tour – die Havel läuft euch nicht weg. 🌊",
-      "Die Erinnerungen sind noch an Bord, auch wenn ihr es nicht mehr seid. 🧠⚓"
-    ];
-
-    function choosePhrase(daysLeft) {
-      const now = new Date();
-      const dayIndex = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
-      let pool;
-
-      if (daysLeft > 60) {
-        pool = phrasesLong;
-      } else if (daysLeft > 30) {
-        pool = phrasesMid;
-      } else if (daysLeft > 7) {
-        pool = phrasesShort;
-      } else if (daysLeft > 0) {
-        pool = phrasesLastWeek;
-      } else {
+    function getDailyPhrase(daysLeft, now) {
+      // Für den Trip-Tag oder später gibt es eigene Sprüche
+      if (daysLeft <= 0) {
         if (
           now.getFullYear() === tripDate.getFullYear() &&
           now.getMonth() === tripDate.getMonth() &&
           now.getDate() === tripDate.getDate()
         ) {
-          pool = phrasesTripDay;
+          return "Heute ist Havel-Tag – <strong>Leinen los</strong> und keine Ausreden mehr! 🚤";
         } else {
-          pool = phrasesAfter;
+          return "Die Tour ist durch – Zeit, Fotos zu sortieren und die nächste Runde zu planen. 📸";
         }
       }
 
-      const safeIndex = ((dayIndex % pool.length) + pool.length) % pool.length;
-      let phrase = pool[safeIndex];
-
-      if (daysLeft > 0) {
-        phrase = phrase.replace("{DAYS}", daysLeft);
-      } else {
-        phrase = phrase.replace("{DAYS}", "0");
-      }
-
-      return phrase;
+      // Index 0 = 1 Tag übrig, Index 199 = 200 Tage übrig
+      const idx = Math.min(daysLeft - 1, dailyPhrases.length - 1);
+      return dailyPhrases[idx].replace("{DAYS}", daysLeft);
     }
 
     function updateCountdown() {
@@ -310,6 +448,7 @@
       const diff = tripDate - now;
 
       if (diff <= 0) {
+        // Trip-Tag erreicht oder vorbei
         daysEl.textContent = "0";
         hoursEl.textContent = "0";
         minutesEl.textContent = "0";
@@ -322,10 +461,11 @@
         ) {
           messageEl.textContent = "Heut is’ der Tag: Leinen los und ab auf die Havel! 🚤";
         } else {
-          messageEl.textContent = "Die Tour hat schon begonnen oder ist vorbei – Zeit, die nächste zu planen. 😉";
+          messageEl.textContent =
+            "Die Tour hat schon begonnen oder ist vorbei – Zeit, die nächste zu planen. 😉";
         }
 
-        dailyPhraseEl.innerHTML = choosePhrase(0);
+        dailyPhraseEl.innerHTML = getDailyPhrase(0, now);
         updateProgress();
         return;
       }
@@ -342,6 +482,7 @@
       minutesEl.textContent = String(minutes).padStart(2, "0");
       secondsEl.textContent = String(seconds).padStart(2, "0");
 
+      // kurzer Status-Text unten
       if (days > 60) {
         messageEl.textContent = "Noch wat hin – perfekte Zeit für Routenplanung und Bier-Auswahl. 🍻";
       } else if (days > 30) {
@@ -354,7 +495,8 @@
         messageEl.textContent = "Gleich geht’s los – du kannst den Diesel schon riechen. 😄";
       }
 
-      dailyPhraseEl.innerHTML = choosePhrase(days);
+      // täglicher Spruch anhand der verbleibenden Tage
+      dailyPhraseEl.innerHTML = getDailyPhrase(days, now);
 
       updateProgress();
     }
