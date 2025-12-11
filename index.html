@@ -138,7 +138,9 @@
       text-align: center;
       opacity: 0.75;
     }
-        .quiz {
+
+    /* Quiz-Styles */
+    .quiz {
       margin-top: 24px;
       padding-top: 16px;
       border-top: 1px solid rgba(255, 255, 255, 0.18);
@@ -220,7 +222,6 @@
       background: rgba(255, 255, 255, 0.12);
     }
 
-
     @media (max-width: 480px) {
       .container {
         margin: 12px;
@@ -289,6 +290,21 @@
     <div class="footer-note">
       Tipp: Mit jedem Tag weniger darf der Kühlschrank ein Bier mehr einplanen. 🍺
     </div>
+
+    <!-- Quiz-Bereich -->
+    <div class="quiz">
+      <div class="quiz-title">Havel-Quiz des Tages</div>
+      <div id="quiz-question" class="quiz-question">
+        <!-- Frage wird per JavaScript gesetzt -->
+      </div>
+      <div id="quiz-answers" class="quiz-answers">
+        <!-- Antwortbuttons kommen per JavaScript -->
+      </div>
+      <div id="quiz-feedback" class="quiz-feedback"></div>
+      <button id="quiz-next" class="quiz-next-btn" type="button">
+        Andere Frage anzeigen
+      </button>
+    </div>
   </div>
 
   <script>
@@ -304,7 +320,12 @@
     const progressFill = document.getElementById("progress-fill");
     const dailyPhraseEl = document.getElementById("daily-phrase");
 
-    // 200 einzigartige Sprüche: Index 0 = 1 Tag übrig, Index 199 = 200 Tage übrig
+    const quizQuestionEl = document.getElementById("quiz-question");
+    const quizAnswersEl = document.getElementById("quiz-answers");
+    const quizFeedbackEl = document.getElementById("quiz-feedback");
+    const quizNextBtn = document.getElementById("quiz-next");
+
+    // 200 (oder nahe dran 😉) Sprüche: Index 0 = 1 Tag übrig, Index N = N+1 Tage übrig
     const dailyPhrases = [
       "Nur noch <strong>{DAYS} Tag</strong> – ab morgen wird die Havel euer Büro. ⛵",
       "Noch <strong>{DAYS} Tage</strong> – letzte E-Mails, dann Funkstille und Dieselduft. 📧➡️🚤",
@@ -506,6 +527,145 @@
       "Noch <strong>{DAYS} Tage</strong> – bald ist alles andere nur noch Kulisse für eure Tour. 🎭"
     ];
 
+    // Quizfragen-Pool – jede Frage mit 3 Antworten, correctIndex gibt die richtige an
+    const quizQuestions = [
+      {
+        question: "Wer hat im engen Fahrwasser grundsätzlich Vorrang?",
+        answers: [
+          "Das größere Boot",
+          "Das talfahrende Fahrzeug (stromabwärts)",
+          "Das schnellere Sportboot"
+        ],
+        correctIndex: 1
+      },
+      {
+        question: "Was bedeutet eine grüne Tonne auf der Havel?",
+        answers: [
+          "Steuerbordseite des Fahrwassers",
+          "Badestelle",
+          "Beginn eines Naturschutzgebietes"
+        ],
+        correctIndex: 0
+      },
+      {
+        question: "Was zeigt dir ein rundes Schild mit roter Umrandung und der Zahl 6?",
+        answers: [
+          "Mindestgeschwindigkeit 6 km/h",
+          "Höchstgeschwindigkeit 6 km/h",
+          "Genau 6 Boote erlaubt"
+        ],
+        correctIndex: 1
+      },
+      {
+        question: "Was bedeutet das Zusatzschild „Sog und Wellenschlag vermeiden“?",
+        answers: [
+          "Besonders schnell fahren",
+          "Langsam und vorsichtig fahren, kaum Wellen erzeugen",
+          "Hier darf man Slalom fahren"
+        ],
+        correctIndex: 1
+      },
+      {
+        question: "Wer hat normalerweise Vorrang an der Schleuse?",
+        answers: [
+          "Sportboote",
+          "Berufsschifffahrt",
+          "Das Boot mit den meisten Leuten an Bord"
+        ],
+        correctIndex: 1
+      },
+      {
+        question: "Wie verhältst du dich gegenüber Berufsschiffen?",
+        answers: [
+          "Dicht vor dem Bug vorbeifahren",
+          "Genügend Abstand halten und nicht schneiden",
+          "Auf gleicher Höhe bleiben und hupen"
+        ],
+        correctIndex: 1
+      },
+      {
+        question: "Was bedeutet ein Schild mit durchgestrichenem Anker?",
+        answers: [
+          "Hier ist Ankern verboten",
+          "Hier MUSS geankert werden",
+          "Hier darf nur nachts geankert werden"
+        ],
+        correctIndex: 0
+      },
+      {
+        question: "Welche Seite des Fahrwassers markiert die rote Tonne?",
+        answers: [
+          "Backbordseite",
+          "Steuerbordseite",
+          "Mitte des Fahrwassers"
+        ],
+        correctIndex: 0
+      },
+      {
+        question: "Was machst du im Naturschutzgebiet?",
+        answers: [
+          "Vollgas, damit die Tiere sich dran gewöhnen",
+          "Langsam fahren, nicht anlegen, nicht ankern",
+          "Extra laut Musik an"
+        ],
+        correctIndex: 1
+      },
+      {
+        question: "Was bedeutet ein blaues Rechteck-Signal an einem anderen Schiff?",
+        answers: [
+          "Es möchte „Steuerbord an Steuerbord“ begegnen",
+          "Es möchte angehupt werden",
+          "Es möchte anlegen"
+        ],
+        correctIndex: 0
+      },
+      {
+        question: "Was ist beim Schleusen wichtig?",
+        answers: [
+          "Nicht an Leitern festmachen, nur an Pollern/Haken",
+          "Mit Vollgas in die Schleuse einfahren",
+          "Leinen ganz kurz fieren und stramm halten"
+        ],
+        correctIndex: 0
+      },
+      {
+        question: "Wie schnell solltest du in engen Bereichen und Häfen fahren?",
+        answers: [
+          "So, dass du jederzeit anhalten kannst",
+          "Mindestens 12 km/h",
+          "So schnell wie der Vordermann"
+        ],
+        correctIndex: 0
+      },
+      {
+        question: "Wie verhalten sich Sportboote beim Überholen?",
+        answers: [
+          "Einfach vorbeiziehen, egal wo Platz ist",
+          "Nur überholen, wenn genug Platz ist, ohne andere zu gefährden",
+          "Immer rechts überholen"
+        ],
+        correctIndex: 1
+      },
+      {
+        question: "Woran erkennst du ein Fahrverbot auf der Wasserstraße?",
+        answers: [
+          "Rotes Schild mit weißem Querbalken",
+          "Grünes Schild mit Pfeil",
+          "Blaues Infoschild"
+        ],
+        correctIndex: 0
+      },
+      {
+        question: "Was machst du bei schlechter Sicht (Nebel, Dämmerung)?",
+        answers: [
+          "Lichter führen, langsam fahren, ggf. Schallsignale",
+          "Schneller fahren, um schneller durchzukommen",
+          "Nur noch nach Gehör fahren"
+        ],
+        correctIndex: 0
+      }
+    ];
+
     function getDailyPhrase(daysLeft, now) {
       // Für den Trip-Tag oder später gibt es eigene Sprüche
       if (daysLeft <= 0) {
@@ -520,7 +680,7 @@
         }
       }
 
-      // Index 0 = 1 Tag übrig, Index 199 = 200 Tage übrig
+      // Index 0 = 1 Tag übrig, Index N = N+1 Tage übrig
       const idx = Math.min(daysLeft - 1, dailyPhrases.length - 1);
       return dailyPhrases[idx].replace("{DAYS}", daysLeft);
     }
@@ -564,7 +724,6 @@
       minutesEl.textContent = String(minutes).padStart(2, "0");
       secondsEl.textContent = String(seconds).padStart(2, "0");
 
-      // kurzer Status-Text unten
       if (days > 60) {
         messageEl.textContent = "Noch wat hin – perfekte Zeit für Routenplanung und Bier-Auswahl. 🍻";
       } else if (days > 30) {
@@ -600,8 +759,63 @@
       progressFill.style.width = percent.toFixed(1) + "%";
     }
 
+    function setQuizButtonsDisabled() {
+      const buttons = quizAnswersEl.querySelectorAll("button");
+      buttons.forEach(btn => {
+        btn.disabled = true;
+        btn.classList.add("disabled");
+      });
+    }
+
+    function loadRandomQuizQuestion() {
+      if (!quizQuestionEl || !quizAnswersEl || quizQuestions.length === 0) return;
+
+      quizFeedbackEl.textContent = "";
+      quizAnswersEl.innerHTML = "";
+
+      const randomIndex = Math.floor(Math.random() * quizQuestions.length);
+      const q = quizQuestions[randomIndex];
+
+      quizQuestionEl.textContent = q.question;
+
+      q.answers.forEach((answerText, idx) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "quiz-answer-btn";
+        btn.textContent = String.fromCharCode(65 + idx) + ") " + answerText;
+
+        btn.addEventListener("click", () => {
+          // Wenn schon beantwortet, ignorieren
+          if (btn.classList.contains("disabled")) return;
+
+          setQuizButtonsDisabled();
+
+          if (idx === q.correctIndex) {
+            btn.classList.add("correct");
+            quizFeedbackEl.textContent = "Richtig – so bleibt ihr sicher unterwegs. ⚓";
+          } else {
+            btn.classList.add("wrong");
+            const correctLetter = String.fromCharCode(65 + q.correctIndex);
+            quizFeedbackEl.textContent =
+              "Nicht ganz – richtig ist Antwort " + correctLetter + ". 😉";
+          }
+        });
+
+        quizAnswersEl.appendChild(btn);
+      });
+    }
+
+    if (quizNextBtn) {
+      quizNextBtn.addEventListener("click", () => {
+        loadRandomQuizQuestion();
+      });
+    }
+
     updateCountdown();
     setInterval(updateCountdown, 1000);
+
+    // Quiz initial laden
+    loadRandomQuizQuestion();
   </script>
 </body>
 </html>
